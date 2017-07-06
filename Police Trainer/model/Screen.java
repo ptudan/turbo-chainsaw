@@ -1,4 +1,4 @@
-package view;
+package model;
 import java.util.*;
 import java.awt.Rectangle;
 
@@ -12,6 +12,7 @@ public class Screen{
 	private List<Window> windows = new ArrayList<Window>();
 	private int score = 0;
 	private Random r = new Random();
+	private int lives = 3;
 
 	public Screen(){
 
@@ -22,11 +23,11 @@ public class Screen{
 
 		while(windows.size()<count){
 			boolean repeat = true;
-			int width, height, x, y;
+			int width = -1, height = -1, x = -1, y = -1;
 			while(repeat){
 				repeat = false;
 				width = minWindowWidth + r.nextInt(maxWindowWidth - minWindowWidth);
-				height = width*1.6;
+				height = (5*width)/3;
 				x = r.nextInt(boardWidth-width);
 				y = r.nextInt(boardHeight-height);
 				Rectangle r = new Rectangle(x, y, width, height);
@@ -37,7 +38,22 @@ public class Screen{
 					}
 				}
 			}
-			window.add(new Window(x, y, width, height, 2500));
+			windows.add(new Window(x, y, width, height, 15));
+		}
+	}
+
+	private void tickWindows(){
+		for(Window w : windows){
+			if(w.tickTimer() == 1){
+				getShot();
+			}
+		}
+	}
+
+	private void getShot(){
+		lives--;
+		if(lives<=0){
+			//TO DO: DIE
 		}
 	}
 
