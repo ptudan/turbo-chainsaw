@@ -44,15 +44,21 @@ public class Window{
 
 	public int tickTimer(){
 		curTime++;
+		int retVal = 0;
 		if(curTime>=maxTime){
 			curTime = 0;
 			if(contains == CRIMINAL){
-				contains = r.nextInt(3);
-				return 1;
+				retVal = 1;
+			}
+			else if(contains == DEAD_CRIMINAL){
+				retVal = 2;
+			}
+			else if(contains == DEAD_INNOCENT){
+				retVal = 3;
 			}
 			contains = r.nextInt(3);
 		}
-		return 0;
+		return retVal;
 	}
 
 	private void getShot(){

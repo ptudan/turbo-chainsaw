@@ -44,9 +44,24 @@ public class Screen{
 
 	private void tickWindows(){
 		for(Window w : windows){
-			if(w.tickTimer() == 1){
+			int temp = w.tickTimer();
+			if(temp == 1){
 				getShot();
 			}
+			else if(temp == 2){
+				score++;
+			}
+			else if(temp == 3){
+				score -= 5;
+				killInnocent();
+			}
+		}
+	}
+
+	private void killInnocent(){
+		lives --;
+		if(lives<=0){
+			//TO DO: DIE
 		}
 	}
 
