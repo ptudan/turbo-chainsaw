@@ -7,8 +7,6 @@ public class Screen{
 	
 	private final static int boardHeight = 800;
 	private final static int boardWidth = 1280;
-	private int minWindowWidth = 50;
-	private int maxWindowWidth = 150;
 	private int minTime = 500;
 	private List<Window> windows = new ArrayList<Window>();
 	private int score = 0;
@@ -17,6 +15,14 @@ public class Screen{
 
 	public Screen(){
 		spawnWindows(5);
+	}
+
+	public int getScore(){
+		return score;
+	}
+
+	public int getLives(){
+		return lives;
 	}
 
 	public List<Window> getWindows(){
@@ -36,14 +42,12 @@ public class Screen{
 
 		while(windows.size()<count){
 			boolean repeat = true;
-			int width = -1, height = -1, x = -1, y = -1;
+			int x = -1, y = -1;
 			while(repeat){
 				repeat = false;
-				width = minWindowWidth + r.nextInt(maxWindowWidth - minWindowWidth);
-				height = (5*width)/3;
-				x = r.nextInt(boardWidth-width);
-				y = r.nextInt(boardHeight-height);
-				Rectangle r = new Rectangle(x, y, width, height);
+				x = r.nextInt(boardWidth-ImageData.WINDOW.getActualWidth());
+				y = 50+r.nextInt((boardHeight-ImageData.WINDOW.getActualHeight())-50);
+				Rectangle r = new Rectangle(x, y, ImageData.WINDOW.getActualWidth(), ImageData.WINDOW.getActualHeight());
 				for(Window w : windows){
 					if(w.clashesWith(r)){
 						repeat = true;
@@ -51,13 +55,17 @@ public class Screen{
 					}
 				}
 			}
-			windows.add(new Window(x, y, width, height, 50));
+			windows.add(new Window(x, y, 50));
 		}
 	}
 
 	public void tickWindows(){
+		ArrayList<Integer> del = new ArrayList<Integer>();
+		int ind = 0;
 		for(Window w : windows){
 			int temp = w.tickTimer();
+			if(temp!=0)del.add(ind);
+
 			if(temp == 1){
 				getShot();
 			}
@@ -68,7 +76,13 @@ public class Screen{
 				score -= 5;
 				killInnocent();
 			}
+			ind++;
 		}
+		Collections.sort(del, Collections.reverseOrder());
+		for(int n : del){
+			windows.remove(n);
+		}
+		spawnWindows(windows.size()+del.size());
 	}
 
 	public void checkClick(Point p){

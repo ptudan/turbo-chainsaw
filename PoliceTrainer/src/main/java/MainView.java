@@ -1,6 +1,7 @@
 //package view;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.awt.Point;
 import java.awt.BasicStroke;
@@ -10,11 +11,14 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.File;
+import java.awt.Cursor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
 
 import javax.imageio.ImageIO;
@@ -23,11 +27,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
-import org.imgscalr
+//import org.imgscalr;
 
-//import model.*;
 
-public class MainView extends JPanel implements MouseListener, ActionListener{
+public class MainView extends JPanel implements MouseListener, /*MouseMotionListener,*/ ActionListener{
 	private Screen scr;
 	//ArrayList<BufferedImage> iPics = new ArrayList<BufferedImage>();
 	//ArrayList<BufferedImage> cPics = new ArrayList<BufferedImage>();
@@ -49,6 +52,7 @@ public class MainView extends JPanel implements MouseListener, ActionListener{
 		inno2 = createImage("../images/innocent2.png");
 		empty = createImage("../images/emptyWindow.png");
 		addMouseListener(this);
+		this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		scr = new Screen();
 
 	}
@@ -96,10 +100,22 @@ public class MainView extends JPanel implements MouseListener, ActionListener{
 				default: temp = empty;
 					break;
 			}
+			//BufferedImage temp2 = 
 			g.drawImage(temp, w.getXLoc(), w.getYLoc(), null);
 		}
+		g.drawString("Score: " + scr.getScore(), 10, 10);
+		g.drawString("Lives: " +scr.getLives(), 150, 10);
 	}
 
+/*	private BufferedImage getScaledImage(Image srcImg, int w, int h){
+	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
+	    Graphics2D g2 = resizedImg.createGraphics();
+	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	    g2.drawImage(srcImg, 0, 0, w, h, null);
+	    g2.dispose();
+	    return resizedImg;
+	}
+*/
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -132,5 +148,15 @@ public class MainView extends JPanel implements MouseListener, ActionListener{
 		repaint();
 		scr.tickWindows();
 	}
+/*
+	@Override
+	public void mouseDragged(MouseEvent m){
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent m){
+
+	}*/
 	
 }

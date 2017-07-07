@@ -7,8 +7,6 @@ import java.util.Random;
 public class Window{
 	private int x;
 	private int y;
-	private int width;
-	private int height;
 	private int contains;
 	private final int EMPTY = 0;
 	private final int CRIMINAL = 1;
@@ -20,12 +18,10 @@ public class Window{
 	private Rectangle rect;
 	private Random r = new Random();
 
-	public Window(int x, int y, int width, int height, int maxTime){
+	public Window(int x, int y, int maxTime){
 		this.x = x;
 		this.y = y;
-		this.width = width;
-		this.height = height;
-		rect = new Rectangle(x, y, width, height);
+		rect = new Rectangle(x, y, ImageData.WINDOW.getActualWidth(), ImageData.WINDOW.getActualHeight());
 		this.maxTime = 15 + r.nextInt(maxTime-15);
 		contains = r.nextInt(3);
 		curTime = 0;
@@ -35,7 +31,7 @@ public class Window{
 	public void setXY(int x, int y){
 		this.x = x;
 		this.y = y;
-		rect = new Rectangle(x, y, width, height);
+		rect = new Rectangle(x, y, ImageData.WINDOW.getActualWidth(), ImageData.WINDOW.getActualHeight());
 	}
 
 	public boolean clashesWith(Rectangle r2){
@@ -47,6 +43,7 @@ public class Window{
 		int retVal = 0;
 		if(curTime>=maxTime){
 			curTime = 0;
+			retVal = -1;
 			if(contains == CRIMINAL){
 				retVal = 1;
 			}
