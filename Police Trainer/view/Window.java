@@ -1,5 +1,5 @@
 
-package model;
+//package model;
 import java.awt.Rectangle;
 import java.awt.Point;
 import java.util.Random;
@@ -26,8 +26,8 @@ public class Window{
 		this.width = width;
 		this.height = height;
 		rect = new Rectangle(x, y, width, height);
-		this.maxTime = maxTime;
-		contains = 0;
+		this.maxTime = 15 + r.nextInt(maxTime-15);
+		contains = r.nextInt(3);
 		curTime = 0;
 
 	}
@@ -75,6 +75,14 @@ public class Window{
 		if(rect.contains(p)){
 			getShot();
 		}
+	}
+
+	public int getXLoc(){
+		return x;
+	}
+
+	public int getYLoc(){
+		return y;
 	}
 
 

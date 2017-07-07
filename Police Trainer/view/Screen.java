@@ -1,11 +1,12 @@
-package model;
+//package model;
 import java.util.*;
 import java.awt.Rectangle;
+import java.awt.Point;
 
 public class Screen{
 	
-	private final static int boardHeight = 600;
-	private final static int boardWidth = 800;
+	private final static int boardHeight = 800;
+	private final static int boardWidth = 1280;
 	private int minWindowWidth = 50;
 	private int maxWindowWidth = 150;
 	private int minTime = 500;
@@ -15,10 +16,22 @@ public class Screen{
 	private int lives = 3;
 
 	public Screen(){
-
+		spawnWindows(5);
 	}
 
-	private void spawnWindows(int count){
+	public List<Window> getWindows(){
+		return windows;
+	}
+
+	public static int getBoardHeight(){
+		return boardHeight;
+	}
+
+	public static int getBoardWidth(){
+		return boardWidth;
+	}
+
+	public void spawnWindows(int count){
 		if(count < 0 || count > 8) return;
 
 		while(windows.size()<count){
@@ -38,11 +51,11 @@ public class Screen{
 					}
 				}
 			}
-			windows.add(new Window(x, y, width, height, 15));
+			windows.add(new Window(x, y, width, height, 50));
 		}
 	}
 
-	private void tickWindows(){
+	public void tickWindows(){
 		for(Window w : windows){
 			int temp = w.tickTimer();
 			if(temp == 1){
@@ -55,6 +68,12 @@ public class Screen{
 				score -= 5;
 				killInnocent();
 			}
+		}
+	}
+
+	public void checkClick(Point p){
+		for(Window w : windows){
+			w.checkShot(p);
 		}
 	}
 

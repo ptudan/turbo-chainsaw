@@ -3,7 +3,7 @@ package view;
 import java.awt.Rectangle;
 
 public enum ImageData {
-	GUN(150, 72, 150, 72, 9);
+	WINDOW(150, 240, 150, 240, 1);
 
 	private int actualWidth;
 	private int actualHeight;
