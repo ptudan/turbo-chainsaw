@@ -44,6 +44,7 @@ public class MainView extends JPanel implements MouseListener, /*MouseMotionList
 	BufferedImage inno1;
 	BufferedImage inno2;
 	BufferedImage empty;
+	BufferedImage bullet;
 
 	public MainView(){
 		crim1 = createImage("../images/criminal1.png");
@@ -51,6 +52,7 @@ public class MainView extends JPanel implements MouseListener, /*MouseMotionList
 		inno1 = createImage("../images/innocent1.png");
 		inno2 = createImage("../images/innocent2.png");
 		empty = createImage("../images/emptyWindow.png");
+		bullet = createImage("../images/bulletHole.png");
 		addMouseListener(this);
 		this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		scr = new Screen();
@@ -103,6 +105,9 @@ public class MainView extends JPanel implements MouseListener, /*MouseMotionList
 			//BufferedImage temp2 = 
 			g.drawImage(temp, w.getXLoc(), w.getYLoc(), null);
 		}
+		for(BulletHole b : scr.getBullets()){
+			g.drawImage(bullet, b.getX(), b.getY(), null);
+		}
 		g.drawString("Score: " + scr.getScore(), 10, 10);
 		g.drawString("Lives: " +scr.getLives(), 150, 10);
 	}
@@ -147,6 +152,7 @@ public class MainView extends JPanel implements MouseListener, /*MouseMotionList
 	public void actionPerformed(ActionEvent e) {
 		repaint();
 		scr.tickWindows();
+		scr.tickBullets();
 	}
 /*
 	@Override

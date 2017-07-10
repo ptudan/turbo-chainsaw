@@ -2,7 +2,7 @@
 import java.awt.Rectangle;
 
 public enum ImageData {
-	WINDOW(150, 240, 150, 240, 1);
+	WINDOW(150, 240, 150, 240, 1), BULLET(60, 60, 60, 60, 1);
 
 	private int actualWidth;
 	private int actualHeight;

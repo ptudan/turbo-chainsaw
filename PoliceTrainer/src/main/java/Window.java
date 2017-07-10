@@ -82,6 +82,10 @@ public class Window{
 		return y;
 	}
 
+	public Rectangle getRect(){
+		return rect;
+	}
+
 
 
 

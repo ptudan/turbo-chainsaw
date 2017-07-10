@@ -9,6 +9,7 @@ public class Screen{
 	private final static int boardWidth = 1280;
 	private int minTime = 500;
 	private List<Window> windows = new ArrayList<Window>();
+	private List<BulletHole> bullets = new ArrayList<BulletHole>();
 	private int score = 0;
 	private Random r = new Random();
 	private int lives = 3;
@@ -59,6 +60,10 @@ public class Screen{
 		}
 	}
 
+	public void spawnBullet(int x, int y){
+		bullets.add(new BulletHole(x, y));
+	}
+
 	public void tickWindows(){
 		ArrayList<Integer> del = new ArrayList<Integer>();
 		int ind = 0;
@@ -85,9 +90,48 @@ public class Screen{
 		spawnWindows(windows.size()+del.size());
 	}
 
+	public void tickBullets(){
+		ArrayList<Integer> del = new ArrayList<Integer>();
+		int ind = 0;
+		for(BulletHole b : bullets){
+			if(b.disappear()){
+				del.add(ind);
+			}
+			ind++;
+		}
+		Collections.sort(del, Collections.reverseOrder());
+		for(int n : del){
+			bullets.remove(n);
+		}
+
+	}
+
 	public void checkClick(Point p){
+		spawnBullet((int)p.getX(), (int)p.getY());
 		for(Window w : windows){
 			w.checkShot(p);
+		}
+	}
+
+	public List<BulletHole> getBullets(){
+		return bullets;
+	}
+
+	public void delBullets(Window w){
+		Rectangle r = w.getRect();
+		List<Integer> del = new ArrayList<Integer>();
+		int ind = 0;
+		for(BulletHole b : bullets){
+			int x = b.getX();
+			int y = b.getY();
+			if(r.contains(x, y)){
+				del.add(ind);
+			}
+			ind++;
+		}
+		Collections.sort(del, Collections.reverseOrder());
+		for(int n : del){
+			bullets.remove(n);
 		}
 	}
 
