@@ -152,7 +152,7 @@ public class MainView extends JPanel implements MouseListener, /*MouseMotionList
 	public void actionPerformed(ActionEvent e) {
 		repaint();
 		scr.tickWindows();
-		scr.tickBullets();
+		scr.tickBullets();//hahaha
 	}
 /*
 	@Override
