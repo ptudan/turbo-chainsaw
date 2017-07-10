@@ -85,6 +85,7 @@ public class Screen{
 		}
 		Collections.sort(del, Collections.reverseOrder());
 		for(int n : del){
+			delBullets(windows.get(n));
 			windows.remove(n);
 		}
 		spawnWindows(windows.size()+del.size());
@@ -107,7 +108,7 @@ public class Screen{
 	}
 
 	public void checkClick(Point p){
-		spawnBullet((int)p.getX(), (int)p.getY());
+		spawnBullet((int)p.getX()-30, (int)p.getY()-30);
 		for(Window w : windows){
 			w.checkShot(p);
 		}
