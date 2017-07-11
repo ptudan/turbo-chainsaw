@@ -7,15 +7,46 @@ public class Screen{
 	
 	private final static int boardHeight = 800;
 	private final static int boardWidth = 1280;
+	private final static int statsHeight = 10;
 	private int minTime = 500;
 	private List<Window> windows = new ArrayList<Window>();
 	private List<BulletHole> bullets = new ArrayList<BulletHole>();
 	private int score = 0;
 	private Random r = new Random();
 	private int lives = 3;
+	private boolean playing = true;
+	private int maxAmmo = 9;
+	private int curAmmo;
+	private int reloadTime = 10;
+	private int curReload;
+	private boolean reloading;
 
 	public Screen(){
 		spawnWindows(5);
+		curAmmo = maxAmmo;
+		curReload = 0;
+		reloading = false;
+	}
+
+	public int getAmmo(){
+		return curAmmo;
+	}
+
+	public boolean isReloading(){
+		return reloading;
+	}
+
+	public void reload(){
+		curReload++;
+		if(curReload>=reloadTime){
+			curAmmo = maxAmmo;
+			curReload=0;
+			reloading = false;
+		}
+	}
+
+	public static int getStatsHeight(){
+		return statsHeight;
 	}
 
 	public int getScore(){
@@ -24,6 +55,10 @@ public class Screen{
 
 	public int getLives(){
 		return lives;
+	}
+
+	public boolean isPlaying(){
+		return playing;
 	}
 
 	public List<Window> getWindows(){
@@ -104,14 +139,21 @@ public class Screen{
 		for(int n : del){
 			bullets.remove(n);
 		}
+		if(isReloading()) reload();
 
 	}
 
 	public void checkClick(Point p){
-		spawnBullet((int)p.getX()-30, (int)p.getY()-30);
-		for(Window w : windows){
-			w.checkShot(p);
+		if(curAmmo>0){
+			spawnBullet((int)p.getX()-30, (int)p.getY()-30);
+			for(Window w : windows){
+				w.checkShot(p);
+			}
 		}
+		else{
+			reloading = true;
+		}
+		curAmmo--;
 	}
 
 	public List<BulletHole> getBullets(){
@@ -139,15 +181,20 @@ public class Screen{
 	private void killInnocent(){
 		lives --;
 		if(lives<=0){
-			//TO DO: DIE
+			playing = false;
 		}
 	}
 
 	private void getShot(){
 		lives--;
 		if(lives<=0){
-			//TO DO: DIE
+			playing = false;
 		}
+	}
+
+	private void delAll(){
+		bullets.clear();
+		windows.clear();
 	}
 
 }

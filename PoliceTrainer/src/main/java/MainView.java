@@ -110,6 +110,12 @@ public class MainView extends JPanel implements MouseListener, /*MouseMotionList
 		}
 		g.drawString("Score: " + scr.getScore(), 10, 10);
 		g.drawString("Lives: " +scr.getLives(), 150, 10);
+		if(scr.isReloading()){
+			g.drawString("Ammo: RELOADING", 250, 10);
+		}
+		else{
+			g.drawString("Ammo: " + scr.getAmmo(), 250, 10);
+		}
 	}
 
 /*	private BufferedImage getScaledImage(Image srcImg, int w, int h){
